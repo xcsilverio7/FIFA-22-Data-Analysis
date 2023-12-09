@@ -1,0 +1,186 @@
+---
+title: "FIFA 22"
+author: "Xavier Silverio"
+date: "`r Sys.Date()`"  
+format: html
+editor: visual
+---
+
+This is my analysis of the FIFA 2022 Data set. The dataset was found on sportsstatistics.com, a website created by Thomas Nielsen. The dataset was created on June 16, 2022. The data contains information about the video game FIFA 22. Some of the information includes player statistics.
+
+```{r}
+#Loading in necessary libraries and removing unwanted messages. 
+library(tidyverse)
+library(tidymodels)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+options(scipen=999)
+```
+
+```{r}
+#Loads in FIFA Dataset 
+fifa <-  read_csv(file = "data/players_22.csv")
+fifa
+```
+
+```{r}
+#Checking number of rows and columns in the dataset
+nrow(fifa)
+ncol(fifa)
+```
+
+There are 19,239 rows in this dataset, and there are 110 columns in this dataset.
+
+```{r}
+#Histogram of player ratings 
+ggplot(fifa, aes(x = overall)) +
+  geom_histogram(binwidth = 10,
+                 alpha = 1) +
+labs(x = "Overall Ratings",
+       y = "Count",
+       title = "Histogram of Player Ratings") 
+```
+
+It seems like most players in this FIFA dataset are between 65-75 overall.
+
+```{r}
+#Barplot of players' ages 
+ggplot(fifa, aes(x = age)) +
+  geom_bar()
+```
+
+It seems like most players in this data set are between 20-30 years old.
+
+```{r}
+# mean average rating for fifa players in this dataset. 
+fifa %>%
+  summarise(mean_ratings = mean(overall))
+```
+
+The average rating of players in this dataset is around 65 overall.
+
+```{r}
+#Counting the number of names in FIFA
+fifa %>%
+  count(short_name, sort = TRUE)
+```
+
+It seems like the most common name is J. Rodriguez.
+
+```{r}
+#Checking who is the oldest player in the FIFA dataset
+
+fifa %>% 
+  group_by(short_name) %>%
+  count(age, sort = TRUE) %>% 
+  arrange(desc(age))
+```
+
+Not surprisingly, the oldest player in FIFA 22 is Miura, who is 54 years old.
+
+```{r}
+#Age of FIFA 22 players by their preferred foot. 
+ggplot(fifa, aes(x = age,
+               fill = preferred_foot)) +
+  geom_histogram(binwidth = 10,
+                 alpha = 0.5) +
+  labs(x = "Age",
+       y = "Count",
+       title = "Age of FIFA 22 Players by Their Preferred Foot.") 
+
+```
+
+In this data set, it seems that most players are right footed.
+
+```{r}
+#Finding out relationship between age and position
+
+
+#Goalkeepers
+fifa%>% 
+  filter(player_positions == "GK") %>% 
+ggplot(aes(x = age,
+               fill = player_positions)) +
+  geom_histogram(binwidth = 10,
+                 alpha = 0.5) +
+  labs(x = "Age",
+       y = "Count",
+       title = "Relationship Between Age and Goalkeepers.") 
+
+
+
+#Defenders
+fifa %>% 
+filter(player_positions == "CB" | player_positions == "RB" | player_positions =="LB" | player_positions == "RWB" | player_positions == "LWB") %>% 
+ggplot(aes(x = age,
+               fill = player_positions)) +
+  geom_histogram(binwidth = 10,
+                 alpha = 0.6) +
+  labs(x = "Age",
+       y = "Count",
+       title = "Relationship Between Age and Defenders") 
+
+
+
+#Central Midfielders
+fifa %>% 
+filter(player_positions == "CM" | player_positions == "CDM" | player_positions == "CAM" | player_positions == "RM" | player_positions == "LM") %>% 
+ggplot(aes(x = age,
+               fill = player_positions)) +
+  geom_histogram(binwidth = 10,
+                 alpha = 3.9) +
+  labs(x = "Age",
+       y = "Count",
+       title = "Relationship Between Age and  Midfielders") 
+
+
+#Forwards
+fifa %>% 
+filter(player_positions == "LW" | player_positions == "RW" | player_positions == "ST") %>% 
+ggplot(aes(x = age,
+               fill = player_positions)) +
+  geom_histogram(binwidth = 10,
+                 alpha = 4.9) +
+  labs(x = "Age",
+       y = "Count",
+       title = "Relationship Between Age and Forwards") 
+
+
+
+
+```
+
+It looks like the most common position for 35-45 years old is Goalkeeper. Most players by position seem to be between 15-25 years old. In this dataset, the most common defender position is center back. The most common midfield position seems to be central midfielder. The most common forward position seems to be striker.
+
+```{r}
+#Finding relationship between wage in Euros and age. 
+ggplot(fifa, aes(x = wage_eur, y = age)) +
+geom_jitter(width = 0.1, height = 0.1) +
+  labs(x = "Wage In Euros",
+       y = "Age",
+       title = "Relationship Between Wage in Euros and Age") 
+```
+
+It seems like most data points are on the left of the graph, for most players in this FIFA dataset are earning between 0-100,000 Euros per week.
+
+```{r}
+#Fitting linear model to predict wage in euros by age. 
+wage_age_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(wage_eur ~ age, data = fifa) %>%
+  tidy()
+estimate1 <- wage_age_fit$estimate[1]
+estimate2 <- wage_age_fit$estimate[2]
+```
+
+The estimated linear model is $wage in euros = `r estimate1` + `r estimate2`\times age$
+
+```{r}
+#Jitterplot with a regression line. 
+ggplot(fifa, aes(x = wage_eur, y = age)) +
+geom_jitter(width = 0.1, height = 0.1) +
+geom_smooth(method = "lm", 
+            se = FALSE, color = "orange") 
+
+```
+
+All else held constant, for each additional euro, the age would increase, on average, by 650 years. This does not make sense in context.
