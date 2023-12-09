@@ -6,7 +6,7 @@ format: html
 editor: visual
 ---
 
-This is my analysis of the FIFA 2022 Data set. The dataset was found on sportsstatistics.com, a website created by Thomas Nielsen. The dataset was created on June 16, 2022. The data contains information about the video game FIFA 22. Some of the information includes player statistics.
+This is my analysis of the FIFA 2022 Data set. The dataset was found on sportsstatistics.com, a website created by Thomas Nielsen. The dataset was created on June 16, 2022. The data contains information about the video game FIFA 22. Some of the information includes player statistics like their defending, their shot power, their passing accuracy, and their strength.  
 
 ```{r}
 #Loading in necessary libraries and removing unwanted messages. 
