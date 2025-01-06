@@ -10,34 +10,9 @@ the data contains player statistics from the video game FIFA 22.
 library(tidyverse)
 ```
 
-    ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-    ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-    ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-    ✔ tidyr   1.3.0      ✔ stringr 1.5.0 
-    ✔ readr   2.1.3      ✔ forcats 1.0.0 
-    ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ✖ dplyr::filter() masks stats::filter()
-    ✖ dplyr::lag()    masks stats::lag()
-
 ``` r
 library(tidymodels)
 ```
-
-    ── Attaching packages ────────────────────────────────────── tidymodels 1.0.0 ──
-    ✔ broom        1.0.3     ✔ rsample      1.1.1
-    ✔ dials        1.1.0     ✔ tune         1.0.1
-    ✔ infer        1.0.4     ✔ workflows    1.1.2
-    ✔ modeldata    1.1.0     ✔ workflowsets 1.0.0
-    ✔ parsnip      1.0.3     ✔ yardstick    1.1.0
-    ✔ recipes      1.0.4     
-    ── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
-    ✖ scales::discard() masks purrr::discard()
-    ✖ dplyr::filter()   masks stats::filter()
-    ✖ recipes::fixed()  masks stringr::fixed()
-    ✖ dplyr::lag()      masks stats::lag()
-    ✖ yardstick::spec() masks readr::spec()
-    ✖ recipes::step()   masks stats::step()
-    • Use suppressPackageStartupMessages() to eliminate package startup messages
 
 ``` r
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
