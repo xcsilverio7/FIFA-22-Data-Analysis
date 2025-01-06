@@ -2,7 +2,7 @@
 Xavier Silverio
 2024-02-12
 
-This is my analysis of the FIFA 2022 Data set. The dataset was found on
+This is my analysis of the FIFA 2022 Data set found on
 sportsstatistics.com, a website created by Thomas Nielsen. Created on June 16, 2022, 
 the data contains player statistics from the video game FIFA 22. 
 ``` r
