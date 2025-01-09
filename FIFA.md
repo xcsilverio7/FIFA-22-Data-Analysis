@@ -3,8 +3,8 @@ Xavier Silverio
 2024-02-12
 
 This is my analysis of the FIFA 2022 Data set found on
-sportsstatistics.com, a website created by Thomas Nielsen. Created on June 16, 2022, 
-the data contains player statistics from the video game FIFA 22. 
+sportsstatistics.com, a website created by Thomas Nielsen that contains various datasets from multiple sports. 
+Created on June 16, 2022, the FIFA 2022 data contains player statistics from the video game FIFA 22. 
 ``` r
 #Loading in necessary libraries and removing unwanted messages. 
 library(tidyverse)
